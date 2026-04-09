@@ -3,239 +3,359 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Charla sobre IA — mi uso cotid-IA-no</title>
+  <title>Mi uso cotid-IA-no</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
+    /* ─── TOKENS ──────────────────────────────── */
     :root {
-      --accent: #7c3aed;
-      --accent2: #2563eb;
-      --accent3: #06b6d4;
-      --bg: #0a0a0f;
-      --bg2: #111118;
-      --surface: #1a1a2e;
-      --text: #f1f0ff;
-      --muted: #8b8ab8;
-      --code-bg: #1e1e3f;
+      --p1: #c084fc;   /* purple light  */
+      --p2: #7c3aed;   /* purple        */
+      --b1: #38bdf8;   /* blue light    */
+      --b2: #0ea5e9;   /* blue          */
+      --g1: #34d399;   /* green         */
+      --y1: #fbbf24;   /* yellow/warn   */
+      --bg: #07070f;
+      --s1: #12121f;   /* surface 1     */
+      --s2: #1a1a2e;   /* surface 2     */
+      --tx: #eeeeff;
+      --mu: #6b6b9a;   /* muted         */
+      --bd: rgba(255,255,255,0.07); /* border */
     }
 
+    /* ─── BASE ────────────────────────────────── */
     .reveal-viewport { background: var(--bg); }
 
     .reveal {
       font-family: 'Inter', sans-serif;
-      font-size: 38px;
-      color: var(--text);
+      font-size: 36px;
+      color: var(--tx);
     }
 
-    .reveal h1, .reveal h2, .reveal h3 {
-      font-family: 'Inter', sans-serif;
+    .reveal .slides section {
+      text-align: left;
+      padding: 0 0.1em;
+    }
+
+    /* ─── HEADINGS ────────────────────────────── */
+    .reveal h1 {
+      font-family: 'Syne', sans-serif;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      font-size: 1.65em;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
       text-transform: none;
-      color: var(--text);
+      color: var(--tx);
+      margin-bottom: 0.4em;
+    }
+    .reveal h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95em;
+      font-weight: 600;
+      color: var(--mu);
+      text-transform: none;
+      margin-bottom: 0.5em;
+      letter-spacing: -0.01em;
+    }
+    .reveal h3 {
+      font-size: 0.52em;
+      font-weight: 600;
+      color: var(--b1);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5em;
     }
 
-    .reveal h1 { font-size: 1.8em; line-height: 1.1; }
-    .reveal h2 { font-size: 1.2em; color: var(--muted); font-weight: 600; margin-bottom: 0.6em; }
-    .reveal h3 { font-size: 0.85em; color: var(--accent3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4em; }
+    /* ─── BODY TEXT ───────────────────────────── */
+    .reveal p { font-size: 0.72em; line-height: 1.65; color: #c8c8e8; }
+    .reveal li { font-size: 0.68em; line-height: 1.7; color: #c8c8e8; margin: 0; }
+    .reveal ul { list-style: none; padding: 0; margin: 0; }
+    .reveal ul li { padding-left: 1.2em; position: relative; }
+    .reveal ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--p1);
+      font-size: 0.8em;
+    }
+    .reveal ul li.warn::before { content: '!'; color: var(--y1); font-weight: 700; }
 
-    .reveal p, .reveal li { font-size: 0.75em; line-height: 1.6; color: #d4d3f0; }
-    .reveal ul { list-style: none; padding: 0; }
-    .reveal ul li::before { content: "→ "; color: var(--accent); font-weight: 700; }
-    .reveal ul li { margin-bottom: 0.3em; }
-
+    /* ─── CODE ────────────────────────────────── */
     .reveal code {
       font-family: 'JetBrains Mono', monospace;
-      background: var(--code-bg);
-      color: #a78bfa;
-      padding: 0.15em 0.4em;
-      border-radius: 4px;
-      font-size: 0.85em;
+      background: rgba(192,132,252,0.1);
+      border: 1px solid rgba(192,132,252,0.2);
+      color: var(--p1);
+      padding: 0.1em 0.4em;
+      border-radius: 5px;
+      font-size: 0.82em;
     }
 
-    /* Gradient title */
-    .gradient {
-      background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+    /* ─── LABEL / EYEBROW ─────────────────────── */
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.38em;
+      color: var(--p1);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.6em;
+      opacity: 0.9;
+    }
+
+    /* ─── GRADIENT TEXT ───────────────────────── */
+    .gr {
+      background: linear-gradient(120deg, var(--p1) 0%, var(--b1) 60%, var(--g1) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gr-warm {
+      background: linear-gradient(120deg, #f472b6 0%, var(--p1) 50%, var(--b1) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    /* Accent badge */
-    .badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      font-size: 0.45em;
-      font-weight: 700;
-      padding: 0.3em 0.8em;
-      border-radius: 100px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      vertical-align: middle;
-      margin-left: 0.5em;
-    }
-
-    /* Callout box */
+    /* ─── CALLOUT ─────────────────────────────── */
     .callout {
-      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(37,99,235,0.15));
-      border: 1px solid rgba(124,58,237,0.4);
-      border-radius: 12px;
-      padding: 0.6em 1em;
-      font-size: 0.7em;
-      margin: 0.5em 0;
-      text-align: left;
-      color: #c4b5fd;
+      background: linear-gradient(120deg, rgba(124,58,237,0.12), rgba(14,165,233,0.08));
+      border-left: 3px solid var(--p2);
+      border-radius: 0 10px 10px 0;
+      padding: 0.55em 0.9em;
+      font-size: 0.62em;
+      color: #d8b4fe;
+      line-height: 1.6;
+      margin: 0.6em 0;
     }
-    .callout strong { color: #a78bfa; }
+    .callout.warn {
+      border-left-color: var(--y1);
+      background: rgba(251,191,36,0.07);
+      color: #fde68a;
+    }
 
-    /* Two column layout */
-    .cols {
+    /* ─── CHIP / TAG ──────────────────────────── */
+    .chip {
+      display: inline-block;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.25);
+      color: var(--b1);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.42em;
+      padding: 0.3em 0.75em;
+      border-radius: 6px;
+      margin: 0.12em 0.08em;
+    }
+    .chip.purple {
+      background: rgba(192,132,252,0.1);
+      border-color: rgba(192,132,252,0.25);
+      color: var(--p1);
+    }
+    .chip.green {
+      background: rgba(52,211,153,0.1);
+      border-color: rgba(52,211,153,0.25);
+      color: var(--g1);
+    }
+
+    /* ─── TABLE ───────────────────────────────── */
+    .reveal table {
+      font-size: 0.58em;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 0.4em 0;
+    }
+    .reveal table thead tr th {
+      background: linear-gradient(120deg, rgba(124,58,237,0.4), rgba(14,165,233,0.3));
+      color: white;
+      font-weight: 600;
+      padding: 0.55em 0.9em;
+      text-align: left;
+    }
+    .reveal table thead tr th:first-child { border-radius: 8px 0 0 0; }
+    .reveal table thead tr th:last-child { border-radius: 0 8px 0 0; }
+    .reveal table tbody tr td {
+      padding: 0.45em 0.9em;
+      border-bottom: 1px solid var(--bd);
+      color: #c8c8e8;
+    }
+    .reveal table tbody tr:nth-child(even) td { background: rgba(255,255,255,0.025); }
+    .reveal table tbody tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+    .reveal table tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+    /* ─── TWO COLUMNS ─────────────────────────── */
+    .cols2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5em;
-      text-align: left;
+      gap: 1.2em;
     }
-    .col { }
 
-    /* Table */
-    .reveal table {
-      font-size: 0.6em;
-      border-collapse: collapse;
-      width: 100%;
-      margin: 0.5em 0;
+    /* ─── CARD ────────────────────────────────── */
+    .card {
+      background: var(--s1);
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      padding: 0.85em 1em;
     }
-    .reveal table th {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      padding: 0.5em 0.8em;
-      font-weight: 700;
-      text-align: left;
-    }
-    .reveal table td {
-      padding: 0.45em 0.8em;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      color: #d4d3f0;
-    }
-    .reveal table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
-    .reveal table code { font-size: 0.9em; }
+    .card.accent-p { border-color: rgba(124,58,237,0.35); }
+    .card.accent-b { border-color: rgba(14,165,233,0.35); }
+    .card.accent-y { border-color: rgba(251,191,36,0.3); }
+    .card.accent-g { border-color: rgba(52,211,153,0.3); }
 
-    /* Demo slide */
-    .demo-slide {
+    /* ─── STAT CARDS ──────────────────────────── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1em;
+      margin-top: 0.5em;
+    }
+    .stat-card {
+      background: var(--s1);
+      border-radius: 16px;
+      padding: 1em 0.8em;
+      text-align: center;
+      border: 1px solid var(--bd);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .stat-card.p::before { background: linear-gradient(90deg, var(--p2), var(--p1)); }
+    .stat-card.b::before { background: linear-gradient(90deg, var(--b2), var(--b1)); }
+    .stat-card.g::before { background: linear-gradient(90deg, #059669, var(--g1)); }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8em;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(120deg, var(--p1), var(--b1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.45em;
+      color: var(--mu);
+      margin-top: 0.4em;
+      line-height: 1.5;
+    }
+
+    /* ─── LEVEL CARDS ─────────────────────────── */
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.9em;
+      margin-top: 0.5em;
+    }
+    .lcard {
+      background: var(--s1);
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      padding: 0.9em;
+      position: relative;
+      overflow: hidden;
+    }
+    .lcard::after {
+      content: attr(data-n);
+      position: absolute;
+      top: -0.1em; right: 0.4em;
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5em;
+      font-weight: 800;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+    }
+    .lcard-n  { font-family: 'JetBrains Mono', monospace; font-size: 0.42em; color: var(--p1); font-weight: 600; }
+    .lcard-t  { font-family: 'Syne', sans-serif; font-size: 0.6em; font-weight: 700; color: var(--tx); margin: 0.25em 0 0.4em; line-height: 1.3; }
+    .lcard-d  { font-size: 0.5em; color: var(--mu); line-height: 1.5; }
+
+    /* ─── DEMO SLIDE ──────────────────────────── */
+    .demo-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.5em;
+      min-height: 70vh;
+      gap: 0.6em;
+      text-align: center;
     }
-    .demo-icon {
-      font-size: 2.5em;
-      margin-bottom: 0.2em;
-    }
-    .demo-title {
-      font-size: 1.1em !important;
-      font-weight: 800 !important;
-      color: var(--text) !important;
-    }
-    .demo-label {
-      font-size: 0.55em;
-      color: var(--muted);
+    .demo-icon { font-size: 3em; line-height: 1; }
+    .demo-n {
       font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* Section divider */
-    .section-num {
-      font-size: 0.4em;
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
+      font-size: 0.45em;
+      color: var(--p1);
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      display: block;
-      margin-bottom: 0.3em;
     }
+    .demo-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4em;
+      font-weight: 800;
+    }
+    .demo-sub { font-size: 0.55em; color: var(--mu); font-family: 'JetBrains Mono', monospace; }
 
-    /* Tip chip */
-    .tip {
-      display: inline-block;
-      background: rgba(6,182,212,0.12);
-      border: 1px solid rgba(6,182,212,0.3);
-      color: #67e8f9;
-      font-size: 0.5em;
-      padding: 0.25em 0.7em;
-      border-radius: 6px;
+    /* ─── CENTER SLIDE ────────────────────────── */
+    .reveal .slides section.tc { text-align: center; }
+
+    /* ─── DIVIDER SLIDE ───────────────────────── */
+    .divider {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 70vh;
+    }
+    .divider .num {
       font-family: 'JetBrains Mono', monospace;
-      margin: 0.15em 0.1em;
+      font-size: 0.4em;
+      color: var(--p1);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.4em;
     }
 
-    /* Big number */
-    .big-num {
-      font-size: 2em;
-      font-weight: 900;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
+    /* ─── NOISE OVERLAY ───────────────────────── */
+    .reveal-viewport::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
     }
 
-    /* Warning / limitation */
-    .warn { color: #fbbf24; }
-    .reveal ul li.warn::before { color: #fbbf24; content: "⚠ "; }
-
-    /* Level cards */
-    .levels {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1em;
-      margin-top: 0.5em;
-    }
-    .level-card {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 0.8em;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: left;
-    }
-    .level-card .num { font-size: 0.55em; color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-    .level-card .title { font-size: 0.6em; font-weight: 700; color: var(--text); margin: 0.2em 0; }
-    .level-card .desc { font-size: 0.5em; color: var(--muted); line-height: 1.5; }
-
-    /* Progress bar override */
-    .reveal .progress { background: rgba(124,58,237,0.2); }
-    .reveal .progress span { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-
-    /* Slide number */
+    /* ─── PROGRESS + SLIDE NUM ────────────────── */
+    .reveal .progress { background: rgba(124,58,237,0.15); height: 3px; }
+    .reveal .progress span { background: linear-gradient(90deg, var(--p2), var(--b2)); transition: width 0.4s ease; }
     .reveal .slide-number {
       background: transparent;
-      color: var(--muted);
+      color: var(--mu);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6em;
+      font-size: 0.55em;
+      bottom: 14px;
+      right: 18px;
     }
 
-    /* Section title slide */
-    .section-title { text-align: center; }
-    .section-title h2 {
-      font-size: 0.7em !important;
-      color: var(--accent3) !important;
-      font-family: 'JetBrains Mono', monospace !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.15em;
-    }
+    /* ─── WARN LIST ───────────────────────────── */
+    .warn-list li { color: #fde68a; }
+    .warn-list li::before { content: '⚠'; color: var(--y1); font-size: 0.75em; }
 
-    .reveal .slides section { text-align: left; }
-    .reveal .slides section.center-slide { text-align: center; }
-
-    /* Tag cloud for tips */
-    .tags { margin-top: 0.6em; }
-
-    /* Glow effect on key slides */
-    .glow-border {
-      box-shadow: 0 0 40px rgba(124,58,237,0.2), inset 0 0 40px rgba(124,58,237,0.05);
-      border-radius: 16px;
+    /* ─── GLOW DOT ────────────────────────────── */
+    .gdot {
+      display: inline-block;
+      width: 0.4em;
+      height: 0.4em;
+      border-radius: 50%;
+      background: var(--p1);
+      box-shadow: 0 0 12px var(--p1);
+      margin-right: 0.3em;
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -243,62 +363,68 @@
 <div class="reveal">
   <div class="slides">
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 1 — TÍTULO
+    <!-- ══════════════════════════════════════════
+         01 — TÍTULO
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <p style="font-family:'JetBrains Mono',monospace; font-size:0.45em; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5em;">Una charla sobre</p>
-      <h1>
-        <span class="gradient">mi uso<br>cotid<span style="-webkit-text-fill-color:#a78bfa; color:#a78bfa; font-style:italic;">IA</span>no</span>
+    <section class="tc" style="text-align:center;">
+      <span class="eyebrow" style="font-size:0.42em;">una charla sobre</span>
+      <h1 style="font-size:2em; line-height:1.0;">
+        mi uso<br>
+        <span class="gr">cotid<em style="font-style:normal; text-decoration: underline; text-decoration-color: rgba(192,132,252,0.5); text-underline-offset:6px;">IA</em>no</span>
       </h1>
-      <p style="font-size:0.55em; color:var(--muted); margin-top:0.8em; font-style:italic;">No uso IA para hacer magia.<br>La uso para no perder el hilo.</p>
-      <aside class="notes">
-        Arrancar con pausa. Dejar que el título se lea. Luego la frase.
-      </aside>
+      <p style="font-size:0.58em; color:var(--mu); margin-top:0.9em; max-width:500px; margin-inline:auto; line-height:1.7;">
+        No uso IA pa hacer magia.<br>La uso pa no perder el hilo.
+      </p>
+      <aside class="notes">Arrancar con pausa. Dejar que el título se lea.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 2 — PREGUNTA AL PÚBLICO
+    <!-- ══════════════════════════════════════════
+         02 — PREGUNTA
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <span class="section-num">apertura</span>
-      <h1 style="font-size:1.4em;">¿Cuántos abrieron<br><span class="gradient">Claude o ChatGPT</span><br>hoy?</h1>
-      <aside class="notes">
-        Esperar que levanten la mano. Contar. Señalar. Rompe el hielo.
-      </aside>
+    <section class="tc" style="text-align:center;">
+      <span class="eyebrow">apertura</span>
+      <h1 style="font-size:1.6em;">
+        ¿Cuántos abrieron<br>
+        <span class="gr-warm">Claude o ChatGPT</span><br>
+        hoy?
+      </h1>
+      <aside class="notes">Esperar que levanten la mano. Contar. Señalar. Rompe el hielo.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 3 — MÉTRICAS REALES
+    <!-- ══════════════════════════════════════════
+         03 — MÉTRICAS HOY
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <span class="section-num">mi setup hoy</span>
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5em; margin-top:0.5em;">
-        <div style="background:var(--surface); border-radius:16px; padding:1em; border:1px solid rgba(124,58,237,0.3);">
-          <div class="big-num">8</div>
-          <p style="color:var(--muted); font-size:0.5em; margin-top:0.3em;">sesiones<br>paralelas máx.</p>
+    <section class="tc" style="text-align:center;">
+      <span class="eyebrow">mi setup hoy</span>
+      <div class="stats">
+        <div class="stat-card p">
+          <div class="stat-num">8</div>
+          <div class="stat-label">sesiones<br>paralelas máx.</div>
         </div>
-        <div style="background:var(--surface); border-radius:16px; padding:1em; border:1px solid rgba(37,99,235,0.3);">
-          <div class="big-num">10+</div>
-          <p style="color:var(--muted); font-size:0.5em; margin-top:0.3em;">proyectos<br>registrados</p>
+        <div class="stat-card b">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">proyectos<br>registrados</div>
         </div>
-        <div style="background:var(--surface); border-radius:16px; padding:1em; border:1px solid rgba(6,182,212,0.3);">
-          <div class="big-num">~$20</div>
-          <p style="color:var(--muted); font-size:0.5em; margin-top:0.3em;">costo mensual<br>aprox.</p>
+        <div class="stat-card g">
+          <div class="stat-num">~$X</div>
+          <div class="stat-label">gasto<br>hoy en USD</div>
         </div>
       </div>
-      <aside class="notes">Actualizar números antes de la charla.</aside>
+      <p style="font-size:0.42em; color:var(--mu); margin-top:0.7em; text-align:center;">
+        El costo diario aparece en vivo en el status line de cada sesión
+      </p>
+      <aside class="notes">Actualizar $X con el gasto real del día antes de la charla. Se lee del status line de Claude Code.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 4 — DE CHAT A COPILOTO
+    <!-- ══════════════════════════════════════════
+         04 — DE CHAT A COPILOTO
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 1 — de chat a copiloto</span>
-      <h1>Cómo empecé</h1>
-      <div class="cols" style="margin-top:0.4em;">
-        <div>
-          <h3>El pasado</h3>
+      <span class="eyebrow">sección 01 — de chat a copiloto</span>
+      <h1>Así empecé,<br>como todos</h1>
+      <div class="cols2" style="margin-top:0.4em;">
+        <div class="card">
+          <h3>El comienzo</h3>
           <ul>
             <li>ChatGPT — preguntas sueltas</li>
             <li>Claude Desktop — borradores</li>
@@ -306,7 +432,7 @@
             <li>Explicar el contexto cada vez</li>
           </ul>
         </div>
-        <div>
+        <div class="card accent-p">
           <h3>El salto</h3>
           <ul>
             <li>Claude Code — vive en la terminal</li>
@@ -319,167 +445,168 @@
       <aside class="notes">El punto clave: el cambio no fue de herramienta, fue de dónde vive la herramienta.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 5 — ANTES VS DESPUÉS
+    <!-- ══════════════════════════════════════════
+         05 — ANTES VS DESPUÉS
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 1 — antes vs. después</span>
+      <span class="eyebrow">sección 01 — antes vs. después</span>
       <table>
         <thead>
-          <tr><th>Antes</th><th>Después</th></tr>
+          <tr><th>Antes</th><th>Ahora</th></tr>
         </thead>
         <tbody>
-          <tr><td>Pego código, explico el contexto</td><td>Claude ya conoce el repo y el stack</td></tr>
-          <tr><td>Una tarea a la vez</td><td>Varias sesiones en paralelo</td></tr>
+          <tr><td>Pego código y explico el contexto</td><td>Ya conoce el repo y el stack</td></tr>
+          <tr><td>Una tarea a la vez, sin falta</td><td>Varias sesiones corriendo al tiempo</td></tr>
           <tr><td>Pierdo el hilo entre sesiones</td><td><code>TASK_NOTES.md</code> persiste todo</td></tr>
-          <tr><td>Busco en docs manualmente</td><td>Claude lee código y docs directo</td></tr>
+          <tr><td>Busco en docs a mano</td><td>Lee código y docs directamente</td></tr>
           <tr><td>Context-switch constante</td><td>Cada sesión en su propio worktree</td></tr>
         </tbody>
       </table>
-      <div class="callout" style="margin-top:0.6em;">
-        💡 La diferencia clave: el AI ya sabe dónde estás parado. No tenés que explicar todo desde cero.
+      <div class="callout">
+        💡 La diferencia clave: el AI ya sabe dónde estás parado. Bacano, ¿no?
       </div>
       <aside class="notes">La tabla es el "aha moment" para no-técnicos.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 6 — SESIONES EN PARALELO
+    <!-- ══════════════════════════════════════════
+         06 — SESIONES PARALELAS (INTRO)
     ══════════════════════════════════════════════ -->
-    <section>
-      <span class="section-num">sección 2 — sesiones en paralelo</span>
-      <h1>El cambio real:<br><span class="gradient">dejar de hacer<br>una cosa a la vez</span></h1>
-      <aside class="notes">Pausa dramática acá. Dejar que se procese.</aside>
+    <section class="divider">
+      <div class="num">SECCIÓN 02</div>
+      <h1>El cambio real:<br><span class="gr">dejar de hacer<br>una cosa a la vez</span></h1>
+      <aside class="notes">Pausa dramática. Dejar que se procese.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 7 — CÓMO FUNCIONA
+    <!-- ══════════════════════════════════════════
+         07 — CÓMO FUNCIONA
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 2 — cómo funciona</span>
-      <h1>Mientras Claude trabaja<br>en tarea A →<br><span class="gradient">vos avanzás en B</span></h1>
-      <ul style="margin-top:0.5em;">
+      <span class="eyebrow">sección 02 — sesiones en paralelo</span>
+      <h1>Mientras Claude<br>trabaja en A →<br><span class="gr">vos avanzás en B</span></h1>
+      <ul style="margin-top:0.4em;">
         <li>Cada sesión en su propio <strong>worktree aislado</strong></li>
-        <li>Rama separada, sin interferirse</li>
-        <li>Hasta <strong>8 sesiones simultáneas</strong></li>
+        <li>Rama separada, sin que se estorben</li>
+        <li>Hasta <strong>8 sesiones simultáneas</strong> configuradas</li>
       </ul>
       <div class="callout">
-        💡 Como varios asistentes en paralelo, cada uno en su propia sala, sin estorbarse.
+        💡 Como varios parceros trabajando en paralelo, cada uno en su sala, sin pisarse.
       </div>
-      <div class="tags">
-        <span class="tip">skip_permissions: true</span>
-        <span class="tip">cwc / cwr / cwi / cwp</span>
-        <span class="tip">cwo + fzf</span>
-        <span class="tip">max_concurrent: 8</span>
+      <div style="margin-top:0.5em;">
+        <span class="chip purple">skip_permissions: true</span>
+        <span class="chip">cwc / cwr / cwi / cwp</span>
+        <span class="chip">cwo + fzf</span>
+        <span class="chip purple">max_concurrent: 8</span>
       </div>
       <aside class="notes">skip_permissions = sin prompts, Claude trabaja solo sin interrumpirte.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 8 — DEMO 1
+    <!-- ══════════════════════════════════════════
+         08 — DEMO 1
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <div class="demo-slide">
+    <section class="tc" style="text-align:center;">
+      <div class="demo-wrap">
         <div class="demo-icon">⚡</div>
-        <p class="demo-title gradient">Demo 1</p>
-        <p class="demo-label">CW en terminal — sesiones en vivo</p>
-        <div style="margin-top:0.8em; display:flex; gap:0.5em; justify-content:center; flex-wrap:wrap;">
-          <span class="tip">cw work proyecto</span>
-          <span class="tip">cwc frontend</span>
-          <span class="tip">cw spaces</span>
+        <div class="demo-n">Demo 01</div>
+        <div class="demo-title"><span class="gr">CW en terminal</span></div>
+        <div class="demo-sub">sesiones en vivo desde la terminal</div>
+        <div style="margin-top:0.8em;">
+          <span class="chip">cw work proyecto</span>
+          <span class="chip">cwc frontend</span>
+          <span class="chip">cw spaces</span>
         </div>
       </div>
-      <aside class="notes">Abrir terminal. Mostrar cw spaces para ver sesiones activas. Crear una nueva con cwc. Mostrar el worktree creado.</aside>
+      <aside class="notes">Abrir terminal. cw spaces para ver sesiones activas. Crear una con cwc. Mostrar el worktree.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 9 — ARCHIVOS DE CONTEXTO
+    <!-- ══════════════════════════════════════════
+         09 — CONTEXTO (INTRO)
     ══════════════════════════════════════════════ -->
-    <section>
-      <span class="section-num">sección 3 — archivos de contexto</span>
-      <h1>El secreto:<br><span class="gradient">Claude siempre sabe<br>dónde está parado</span></h1>
-      <aside class="notes">Intro a los archivos de contexto. El "manual del empleado".</aside>
+    <section class="divider">
+      <div class="num">SECCIÓN 03</div>
+      <h1>El secreto:<br><span class="gr">Claude siempre<br>sabe dónde está parado</span></h1>
+      <aside class="notes">Intro a los archivos de contexto.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 10 — LAS CAPAS
+    <!-- ══════════════════════════════════════════
+         10 — LAS CAPAS
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 3 — las capas</span>
+      <span class="eyebrow">sección 03 — archivos de contexto</span>
       <table>
         <thead>
-          <tr><th>Archivo</th><th>Para qué sirve</th></tr>
+          <tr><th>Archivo</th><th>¿Pa qué sirve?</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>CLAUDE.md</code></td><td>Manual del proyecto: stack, convenciones, qué no tocar</td></tr>
+          <tr><td><code>CLAUDE.md</code></td><td>Manual del proyecto — stack, reglas, qué no tocar</td></tr>
           <tr><td><code>TASK_NOTES.md</code></td><td>Contexto de la tarea — persiste entre sesiones</td></tr>
           <tr><td><code>SHARED_CONTEXT.md</code></td><td>Notas cruzadas entre todos los worktrees</td></tr>
           <tr><td><code>init_prompt.txt</code></td><td>Setup automático al abrir la sesión</td></tr>
         </tbody>
       </table>
-      <div class="callout" style="margin-top:0.5em;">
-        💡 Como el onboarding de un contratista: llega y ya tiene el manual en mano.
+      <div class="callout">
+        💡 Como el onboarding de un parcero nuevo: llega y ya tiene el manual en la mano.
       </div>
-      <aside class="notes">SHARED_CONTEXT es el más poderoso — varias sesiones compartiendo descubrimientos.</aside>
+      <aside class="notes">SHARED_CONTEXT es el más poderoso — varias sesiones compartiendo hallazgos.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 11 — TIPS CONTEXTO
+    <!-- ══════════════════════════════════════════
+         11 — TIPS CONTEXTO
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 3 — tips</span>
-      <h1>Contexto inteligente</h1>
-      <ul>
-        <li>Si una sesión descubre algo → <code>SHARED_CONTEXT.md</code> y las demás lo saben</li>
-        <li><strong>Workflow templates</strong> — Claude sigue checklists (feature, bugfix, refactor)</li>
-        <li><strong>Auto-compact hook</strong> — Claude se avisa solo antes de que el contexto se llene</li>
-        <li><strong>Hooks en general</strong> — 18 eventos, sonidos, logs, contexto inyectado automáticamente</li>
+      <span class="eyebrow">sección 03 — tips</span>
+      <h1>Contexto<br><span class="gr">inteligente</span></h1>
+      <ul style="margin-top:0.4em;">
+        <li>Si una sesión descubre algo → <code>SHARED_CONTEXT.md</code> y todas las demás lo ven</li>
+        <li><strong>Workflow templates</strong> — Claude sigue checklists estructuradas (feature, bugfix, refactor)</li>
+        <li><strong>Auto-compact hook</strong> — se avisa solo antes de que el contexto se llene</li>
+        <li><strong>18 hooks disponibles</strong> — sonidos, logs, contexto inyectado automáticamente</li>
       </ul>
-      <aside class="notes">Auto-compact es clave para sesiones largas. Evita que Claude "olvide" cosas al final.</aside>
+      <aside class="notes">Auto-compact es clave pa sesiones largas. Evita que Claude olvide cosas.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 12 — TIPS & SETUP INTRO
+    <!-- ══════════════════════════════════════════
+         12 — TIPS INTRO
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <span class="section-num">sección 4 — tips & setup</span>
-      <h1>Cómo tengo<br><span class="gradient">configurado<br>todo esto</span></h1>
-      <aside class="notes">La sección más densa. Ir rápido, no entrar en detalles técnicos profundos.</aside>
+    <section class="divider">
+      <div class="num">SECCIÓN 04</div>
+      <h1>Cómo tengo<br><span class="gr">configurado<br>todo esto</span></h1>
+      <aside class="notes">La sección más densa. Ir rápido.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 13 — MCPs vs PLUGINS
+    <!-- ══════════════════════════════════════════
+         13 — MCPs vs PLUGINS
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">tips — MCPs y Plugins</span>
-      <div class="cols">
-        <div style="background:var(--surface); border-radius:12px; padding:0.8em; border:1px solid rgba(251,191,36,0.3);">
-          <h3 style="color:#fbbf24;">MCPs ⚠</h3>
+      <span class="eyebrow">sección 04 — MCPs vs Plugins</span>
+      <div class="cols2">
+        <div class="card accent-y">
+          <h3 style="color:var(--y1);">MCPs ⚠</h3>
           <ul>
             <li>Configurados desde claude.ai</li>
             <li>Linear, Notion, Slack, Playwright…</li>
-            <li class="warn">Consumen tokens al inicio aunque no los uses</li>
-            <li>Activá solo los necesarios por tarea</li>
+            <li class="warn" style="color:#fde68a;">Consumen tokens al inicio aunque no los usés</li>
+            <li>Activá solo los que necesitás por tarea</li>
           </ul>
         </div>
-        <div style="background:var(--surface); border-radius:12px; padding:0.8em; border:1px solid rgba(6,182,212,0.3);">
-          <h3>Plugins / Skills ✓</h3>
+        <div class="card accent-g">
+          <h3 style="color:var(--g1);">Plugins / Skills ✓</h3>
           <ul>
             <li>Se cargan <strong>on-demand</strong></li>
-            <li>Solo al invocarlos</li>
+            <li>Solo cuando los invocás</li>
             <li>Sin costo pasivo de tokens</li>
-            <li>Seguros para tener siempre activos</li>
+            <li>Tranqui pa tener siempre activos</li>
           </ul>
         </div>
       </div>
-      <aside class="notes">Esta distinción es importante. MCPs = pasivos. Plugins = perezosos (lazy loading).</aside>
+      <aside class="notes">MCPs = pasivos (costo fijo). Plugins = lazy (solo cuando los llamás).</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 14 — AGENTES Y COMANDOS
+    <!-- ══════════════════════════════════════════
+         14 — AGENTES Y COMANDOS
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">tips — agentes, comandos, skills</span>
-      <div class="cols">
+      <span class="eyebrow">sección 04 — agentes, comandos, skills</span>
+      <div class="cols2">
         <div>
           <h3>Agentes especializados</h3>
           <ul>
@@ -492,13 +619,13 @@
         </div>
         <div>
           <h3>Comandos custom</h3>
-          <ul>
+          <ul style="margin-bottom:0.6em;">
             <li><code>/new-feature</code></li>
             <li><code>/review</code></li>
             <li><code>/test</code></li>
             <li><code>/security-audit</code></li>
           </ul>
-          <h3 style="margin-top:0.6em;">Skills</h3>
+          <h3>Skills</h3>
           <ul>
             <li><code>django-expert</code></li>
             <li><code>postgres-pro</code></li>
@@ -506,79 +633,79 @@
           </ul>
         </div>
       </div>
-      <aside class="notes">Cada agente tiene su modelo (algunos Opus, otros Sonnet) y sus herramientas. Claude delega internamente.</aside>
+      <aside class="notes">Cada agente con su modelo (algunos Opus, otros Sonnet) y sus herramientas. Claude delega internamente.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 15 — VISUAL UX
+    <!-- ══════════════════════════════════════════
+         15 — VISUAL UX
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">tips — visual & UX</span>
-      <h1>La terminal<br><span class="gradient">también tiene estilo</span></h1>
-      <ul style="margin-top:0.4em;">
-        <li><strong>Status line custom</strong> — branch, modelo, contexto %, costo, rate limits con countdown</li>
+      <span class="eyebrow">sección 04 — visual & ux</span>
+      <h1>La terminal<br><span class="gr">también tiene estilo</span></h1>
+      <ul style="margin-top:0.5em;">
+        <li><strong>Status line custom</strong> — branch, modelo, contexto %, costo diario, rate limits con countdown</li>
         <li><strong>Sonidos por evento</strong> — voz personalizada con ElevenLabs (commit, stop, session start…)</li>
-        <li><strong>iTerm2 tab coloring</strong> — cada sesión con su color/nombre automático</li>
+        <li><strong>iTerm2 tab coloring</strong> — cada sesión con su color y nombre automático</li>
         <li><code>alwaysThinkingEnabled: true</code> — extended thinking siempre activo</li>
       </ul>
       <aside class="notes">Mostrar la terminal en vivo si es posible. El status line es lo más visual.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 16 — QUÉ NO HACE BIEN
+    <!-- ══════════════════════════════════════════
+         16 — QUÉ NO HACE BIEN (INTRO)
     ══════════════════════════════════════════════ -->
-    <section>
-      <span class="section-num">sección 5 — honestidad ante todo</span>
-      <h1>Qué <span class="gradient">NO</span> hace bien</h1>
-      <aside class="notes">Esta sección genera más conversación que cualquier otra. Ser directo.</aside>
+    <section class="divider">
+      <div class="num">SECCIÓN 05</div>
+      <h1>Y bueno…<br><span class="gr-warm">también la riega</span></h1>
+      <aside class="notes">Esta sección genera más conversación que cualquier otra. Ser honesto.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 17 — LIMITACIONES
+    <!-- ══════════════════════════════════════════
+         17 — LIMITACIONES
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 5 — limitaciones</span>
-      <ul>
-        <li class="warn"><strong>Alucina</strong> — inventa APIs, funciones, flags que no existen</li>
-        <li class="warn"><strong>Pierde el hilo</strong> en sesiones largas — el contexto se llena</li>
-        <li class="warn"><strong>Decisiones raras</strong> con instrucciones ambiguas — garbage in, garbage out</li>
-        <li class="warn"><strong>No reemplaza tu criterio</strong> — sabe ejecutar, no siempre sabe <em>qué</em> ejecutar</li>
-        <li class="warn"><strong>Depende de conexión</strong> — sin internet, sin Claude</li>
+      <span class="eyebrow">sección 05 — limitaciones</span>
+      <ul class="warn-list" style="margin-top:0.3em;">
+        <li><strong>Alucina</strong> — inventa APIs, funciones y flags que no existen. Siempre verificar.</li>
+        <li><strong>Pierde el hilo</strong> en sesiones largas — el contexto se llena y empieza a olvidar</li>
+        <li><strong>Decisiones raras</strong> con instrucciones ambiguas — basura entra, basura sale</li>
+        <li><strong>No reemplaza el criterio</strong> — sabe ejecutar, no siempre sabe <em>qué</em> ejecutar</li>
+        <li><strong>Necesita conexión</strong> — sin internet, nada que hacer</li>
       </ul>
-      <div class="callout" style="border-color:rgba(251,191,36,0.4); background:rgba(251,191,36,0.05); color:#fde68a;">
-        💡 Por eso importa el setup: CLAUDE.md claro, contexto bien definido, y saber cuándo revisar lo que hace.
+      <div class="callout warn" style="margin-top:0.6em;">
+        Por eso importa el setup: CLAUDE.md claro, contexto bien definido, y saber cuándo revisar lo que hace.
       </div>
-      <aside class="notes">No defender la herramienta acá. Ser honesto genera confianza.</aside>
+      <aside class="notes">No defender la herramienta. Ser honesto genera confianza.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 18 — EASTER EGG INTRO
+    <!-- ══════════════════════════════════════════
+         18 — EASTER EGG INTRO
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <span class="section-num">sección 6 — easter egg</span>
-      <h1>¿Y cómo<br><span class="gradient">manejo<br>todo esto?</span></h1>
-      <aside class="notes">Pausa. Mirar al público. Esperar.</aside>
+    <section class="tc divider" style="text-align:center;">
+      <div class="num" style="text-align:center;">SECCIÓN 06</div>
+      <h1 style="text-align:center;">¿Y cómo<br><span class="gr">manejo<br>todo esto?</span></h1>
+      <aside class="notes">Pausa. Mirar al equipo. Esperar.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 19 — CW + FORGE
+    <!-- ══════════════════════════════════════════
+         19 — CW + FORGE
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">sección 6 — CW + Forge</span>
-      <div class="cols">
-        <div>
+      <span class="eyebrow">sección 06 — cw + forge</span>
+      <div class="cols2">
+        <div class="card accent-p">
           <h3>CW — Claude Workspace Manager</h3>
           <ul>
             <li>CLI en Bash que orquesta todo</li>
             <li>Sesiones, worktrees, cuentas</li>
             <li>Archivos de contexto automáticos</li>
           </ul>
-          <div class="tags" style="margin-top:0.5em;">
-            <span class="tip">cw work proyecto</span>
-            <span class="tip">cw review PR</span>
+          <div style="margin-top:0.6em;">
+            <span class="chip purple">cw work proyecto</span>
+            <span class="chip purple">cw review PR</span>
           </div>
         </div>
-        <div>
+        <div class="card accent-b">
           <h3>Forge — el dashboard</h3>
           <ul>
             <li>Dashboard visual encima de CW</li>
@@ -588,66 +715,67 @@
           </ul>
         </div>
       </div>
-      <div class="callout" style="margin-top:0.4em; font-size:0.55em;">
+      <div class="callout" style="margin-top:0.5em; font-size:0.55em;">
         💡 Bonus: <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1</code> — agentes que se coordinan entre sí
       </div>
       <aside class="notes">No entrar en detalles. La demo habla sola.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 20 — DEMO 2
+    <!-- ══════════════════════════════════════════
+         20 — DEMO 2
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <div class="demo-slide">
+    <section class="tc" style="text-align:center;">
+      <div class="demo-wrap">
         <div class="demo-icon">🚀</div>
-        <p class="demo-title gradient">Demo 2</p>
-        <p class="demo-label">Forge en vivo — dashboard visual</p>
-        <div style="margin-top:0.8em; display:flex; gap:0.5em; justify-content:center; flex-wrap:wrap;">
-          <span class="tip">sesiones activas</span>
-          <span class="tip">terminales</span>
-          <span class="tip">git stats</span>
+        <div class="demo-n">Demo 02</div>
+        <div class="demo-title"><span class="gr">Forge en vivo</span></div>
+        <div class="demo-sub">dashboard visual — sesiones, terminales, git</div>
+        <div style="margin-top:0.8em;">
+          <span class="chip green">sesiones activas</span>
+          <span class="chip green">terminales</span>
+          <span class="chip green">git stats</span>
         </div>
       </div>
-      <aside class="notes">Abrir Forge. Mostrar sesiones activas. Abrir una terminal. Mostrar git stats y MCPs.</aside>
+      <aside class="notes">Abrir Forge. Mostrar sesiones activas. Abrir terminal. Mostrar git stats y MCPs.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 21 — EMPEZÁ HOY
+    <!-- ══════════════════════════════════════════
+         21 — EMPEZÁ HOY
     ══════════════════════════════════════════════ -->
     <section>
-      <span class="section-num">empezá hoy</span>
-      <h1>Tres niveles<br>de entrada</h1>
-      <div class="levels">
-        <div class="level-card">
-          <div class="num">Nivel 0</div>
-          <div class="title">ChatGPT o Claude Desktop</div>
-          <div class="desc">Ya es suficiente para empezar. No necesitás nada más.</div>
+      <span class="eyebrow">empezá hoy</span>
+      <h1>Tres formas<br>de arrancar</h1>
+      <div class="levels" style="margin-top:0.5em;">
+        <div class="lcard" data-n="0">
+          <div class="lcard-n">Nivel 0</div>
+          <div class="lcard-t">ChatGPT o Claude Desktop</div>
+          <div class="lcard-d">Ya con esto arrancás. No necesitás más pa empezar.</div>
         </div>
-        <div class="level-card" style="border-color:rgba(124,58,237,0.4);">
-          <div class="num">Nivel 1</div>
-          <div class="title">Claude Code + CLAUDE.md</div>
-          <div class="desc">Mucho impacto, setup mínimo. Un archivo de texto cambia todo.</div>
+        <div class="lcard" style="border-color:rgba(124,58,237,0.35);" data-n="1">
+          <div class="lcard-n">Nivel 1</div>
+          <div class="lcard-t">Claude Code + CLAUDE.md</div>
+          <div class="lcard-d">Mucho impacto, setup mínimo. Un archivo de texto cambia todo.</div>
         </div>
-        <div class="level-card" style="border-color:rgba(37,99,235,0.4);">
-          <div class="num">Nivel 2</div>
-          <div class="title">Sesiones paralelas + contexto</div>
-          <div class="desc">Cuando estés listo. CW y Forge opcionales.</div>
+        <div class="lcard" style="border-color:rgba(14,165,233,0.35);" data-n="2">
+          <div class="lcard-n">Nivel 2</div>
+          <div class="lcard-t">Sesiones paralelas + contexto</div>
+          <div class="lcard-d">Cuando estés listo. CW y Forge opcionales.</div>
         </div>
       </div>
-      <aside class="notes">El mensaje clave: no necesitás todo esto. Empezá desde donde estás.</aside>
+      <aside class="notes">El mensaje: no necesitás todo esto. Empezá desde donde estás.</aside>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 22 — CIERRE
+    <!-- ══════════════════════════════════════════
+         22 — CIERRE
     ══════════════════════════════════════════════ -->
-    <section class="center-slide" style="text-align:center;">
-      <h1 style="font-size:1.5em;">
-        <span class="gradient">"El mejor setup de AI<br>es el que realmente usás."</span>
+    <section class="tc" style="text-align:center; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:80vh;">
+      <h1 style="font-size:1.55em; max-width:700px;">
+        <span class="gr">"El mejor setup de IA<br>es el que realmente usás."</span>
       </h1>
-      <p style="font-size:0.5em; color:var(--muted); margin-top:1em; font-family:'JetBrains Mono',monospace;">
-        Preguntas → ¿les pica la curiosidad? Hablamos.
+      <p style="font-size:0.5em; color:var(--mu); margin-top:1.2em; font-family:'JetBrains Mono', monospace;">
+        ¿Les pica la curiosidad? — Hablamos.
       </p>
-      <aside class="notes">Silencio. Dejar que respire. Luego abrir para preguntas.</aside>
+      <aside class="notes">Silencio. Dejar que respire. Abrir para preguntas.</aside>
     </section>
 
   </div>
@@ -663,10 +791,9 @@
     transitionSpeed: 'fast',
     backgroundTransition: 'fade',
     center: false,
-    margin: 0.06,
+    margin: 0.07,
     width: 1280,
     height: 720,
-    plugins: []
   });
 </script>
 </body>
