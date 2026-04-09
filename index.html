@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charla sobre IA — mi uso cotid-IA-no</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #7c3aed;
+      --accent2: #2563eb;
+      --accent3: #06b6d4;
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --surface: #1a1a2e;
+      --text: #f1f0ff;
+      --muted: #8b8ab8;
+      --code-bg: #1e1e3f;
+    }
+
+    .reveal-viewport { background: var(--bg); }
+
+    .reveal {
+      font-family: 'Inter', sans-serif;
+      font-size: 38px;
+      color: var(--text);
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: none;
+      color: var(--text);
+    }
+
+    .reveal h1 { font-size: 1.8em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.2em; color: var(--muted); font-weight: 600; margin-bottom: 0.6em; }
+    .reveal h3 { font-size: 0.85em; color: var(--accent3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4em; }
+
+    .reveal p, .reveal li { font-size: 0.75em; line-height: 1.6; color: #d4d3f0; }
+    .reveal ul { list-style: none; padding: 0; }
+    .reveal ul li::before { content: "→ "; color: var(--accent); font-weight: 700; }
+    .reveal ul li { margin-bottom: 0.3em; }
+
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--code-bg);
+      color: #a78bfa;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    /* Gradient title */
+    .gradient {
+      background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Accent badge */
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      font-size: 0.45em;
+      font-weight: 700;
+      padding: 0.3em 0.8em;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      vertical-align: middle;
+      margin-left: 0.5em;
+    }
+
+    /* Callout box */
+    .callout {
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(37,99,235,0.15));
+      border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 12px;
+      padding: 0.6em 1em;
+      font-size: 0.7em;
+      margin: 0.5em 0;
+      text-align: left;
+      color: #c4b5fd;
+    }
+    .callout strong { color: #a78bfa; }
+
+    /* Two column layout */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5em;
+      text-align: left;
+    }
+    .col { }
+
+    /* Table */
+    .reveal table {
+      font-size: 0.6em;
+      border-collapse: collapse;
+      width: 100%;
+      margin: 0.5em 0;
+    }
+    .reveal table th {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      padding: 0.5em 0.8em;
+      font-weight: 700;
+      text-align: left;
+    }
+    .reveal table td {
+      padding: 0.45em 0.8em;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: #d4d3f0;
+    }
+    .reveal table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+    .reveal table code { font-size: 0.9em; }
+
+    /* Demo slide */
+    .demo-slide {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+    }
+    .demo-icon {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+    }
+    .demo-title {
+      font-size: 1.1em !important;
+      font-weight: 800 !important;
+      color: var(--text) !important;
+    }
+    .demo-label {
+      font-size: 0.55em;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Section divider */
+    .section-num {
+      font-size: 0.4em;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.3em;
+    }
+
+    /* Tip chip */
+    .tip {
+      display: inline-block;
+      background: rgba(6,182,212,0.12);
+      border: 1px solid rgba(6,182,212,0.3);
+      color: #67e8f9;
+      font-size: 0.5em;
+      padding: 0.25em 0.7em;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0.15em 0.1em;
+    }
+
+    /* Big number */
+    .big-num {
+      font-size: 2em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    /* Warning / limitation */
+    .warn { color: #fbbf24; }
+    .reveal ul li.warn::before { color: #fbbf24; content: "⚠ "; }
+
+    /* Level cards */
+    .levels {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1em;
+      margin-top: 0.5em;
+    }
+    .level-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 0.8em;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+    }
+    .level-card .num { font-size: 0.55em; color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .level-card .title { font-size: 0.6em; font-weight: 700; color: var(--text); margin: 0.2em 0; }
+    .level-card .desc { font-size: 0.5em; color: var(--muted); line-height: 1.5; }
+
+    /* Progress bar override */
+    .reveal .progress { background: rgba(124,58,237,0.2); }
+    .reveal .progress span { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    /* Slide number */
+    .reveal .slide-number {
+      background: transparent;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6em;
+    }
+
+    /* Section title slide */
+    .section-title { text-align: center; }
+    .section-title h2 {
+      font-size: 0.7em !important;
+      color: var(--accent3) !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.15em;
+    }
+
+    .reveal .slides section { text-align: left; }
+    .reveal .slides section.center-slide { text-align: center; }
+
+    /* Tag cloud for tips */
+    .tags { margin-top: 0.6em; }
+
+    /* Glow effect on key slides */
+    .glow-border {
+      box-shadow: 0 0 40px rgba(124,58,237,0.2), inset 0 0 40px rgba(124,58,237,0.05);
+      border-radius: 16px;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 1 — TÍTULO
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <p style="font-family:'JetBrains Mono',monospace; font-size:0.45em; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5em;">Una charla sobre</p>
+      <h1>
+        <span class="gradient">mi uso<br>cotid<span style="-webkit-text-fill-color:#a78bfa; color:#a78bfa; font-style:italic;">IA</span>no</span>
+      </h1>
+      <p style="font-size:0.55em; color:var(--muted); margin-top:0.8em; font-style:italic;">No uso IA para hacer magia.<br>La uso para no perder el hilo.</p>
+      <aside class="notes">
+        Arrancar con pausa. Dejar que el título se lea. Luego la frase.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 2 — PREGUNTA AL PÚBLICO
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <span class="section-num">apertura</span>
+      <h1 style="font-size:1.4em;">¿Cuántos abrieron<br><span class="gradient">Claude o ChatGPT</span><br>hoy?</h1>
+      <aside class="notes">
+        Esperar que levanten la mano. Contar. Señalar. Rompe el hielo.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 3 — MÉTRICAS REALES
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <span class="section-num">mi setup hoy</span>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5em; margin-top:0.5em;">
+        <div style="background:var(--surface); border-radius:16px; padding:1em; border:1px solid rgba(124,58,237,0.3);">
+          <div class="big-num">8</div>
+          <p style="color:var(--muted); font-size:0.5em; margin-top:0.3em;">sesiones<br>paralelas máx.</p>
+        </div>
+        <div style="background:var(--surface); border-radius:16px; padding:1em; border:1px solid rgba(37,99,235,0.3);">
+          <div class="big-num">10+</div>
+          <p style="color:var(--muted); font-size:0.5em; margin-top:0.3em;">proyectos<br>registrados</p>
+        </div>
+        <div style="background:var(--surface); border-radius:16px; padding:1em; border:1px solid rgba(6,182,212,0.3);">
+          <div class="big-num">~$20</div>
+          <p style="color:var(--muted); font-size:0.5em; margin-top:0.3em;">costo mensual<br>aprox.</p>
+        </div>
+      </div>
+      <aside class="notes">Actualizar números antes de la charla.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 4 — DE CHAT A COPILOTO
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 1 — de chat a copiloto</span>
+      <h1>Cómo empecé</h1>
+      <div class="cols" style="margin-top:0.4em;">
+        <div>
+          <h3>El pasado</h3>
+          <ul>
+            <li>ChatGPT — preguntas sueltas</li>
+            <li>Claude Desktop — borradores</li>
+            <li>Copiar y pegar código</li>
+            <li>Explicar el contexto cada vez</li>
+          </ul>
+        </div>
+        <div>
+          <h3>El salto</h3>
+          <ul>
+            <li>Claude Code — vive en la terminal</li>
+            <li>Dentro del proyecto real</li>
+            <li>Lee el código directamente</li>
+            <li>Ya sabe dónde estás parado</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">El punto clave: el cambio no fue de herramienta, fue de dónde vive la herramienta.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 5 — ANTES VS DESPUÉS
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 1 — antes vs. después</span>
+      <table>
+        <thead>
+          <tr><th>Antes</th><th>Después</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pego código, explico el contexto</td><td>Claude ya conoce el repo y el stack</td></tr>
+          <tr><td>Una tarea a la vez</td><td>Varias sesiones en paralelo</td></tr>
+          <tr><td>Pierdo el hilo entre sesiones</td><td><code>TASK_NOTES.md</code> persiste todo</td></tr>
+          <tr><td>Busco en docs manualmente</td><td>Claude lee código y docs directo</td></tr>
+          <tr><td>Context-switch constante</td><td>Cada sesión en su propio worktree</td></tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:0.6em;">
+        💡 La diferencia clave: el AI ya sabe dónde estás parado. No tenés que explicar todo desde cero.
+      </div>
+      <aside class="notes">La tabla es el "aha moment" para no-técnicos.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 6 — SESIONES EN PARALELO
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 2 — sesiones en paralelo</span>
+      <h1>El cambio real:<br><span class="gradient">dejar de hacer<br>una cosa a la vez</span></h1>
+      <aside class="notes">Pausa dramática acá. Dejar que se procese.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 7 — CÓMO FUNCIONA
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 2 — cómo funciona</span>
+      <h1>Mientras Claude trabaja<br>en tarea A →<br><span class="gradient">vos avanzás en B</span></h1>
+      <ul style="margin-top:0.5em;">
+        <li>Cada sesión en su propio <strong>worktree aislado</strong></li>
+        <li>Rama separada, sin interferirse</li>
+        <li>Hasta <strong>8 sesiones simultáneas</strong></li>
+      </ul>
+      <div class="callout">
+        💡 Como varios asistentes en paralelo, cada uno en su propia sala, sin estorbarse.
+      </div>
+      <div class="tags">
+        <span class="tip">skip_permissions: true</span>
+        <span class="tip">cwc / cwr / cwi / cwp</span>
+        <span class="tip">cwo + fzf</span>
+        <span class="tip">max_concurrent: 8</span>
+      </div>
+      <aside class="notes">skip_permissions = sin prompts, Claude trabaja solo sin interrumpirte.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 8 — DEMO 1
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <div class="demo-slide">
+        <div class="demo-icon">⚡</div>
+        <p class="demo-title gradient">Demo 1</p>
+        <p class="demo-label">CW en terminal — sesiones en vivo</p>
+        <div style="margin-top:0.8em; display:flex; gap:0.5em; justify-content:center; flex-wrap:wrap;">
+          <span class="tip">cw work proyecto</span>
+          <span class="tip">cwc frontend</span>
+          <span class="tip">cw spaces</span>
+        </div>
+      </div>
+      <aside class="notes">Abrir terminal. Mostrar cw spaces para ver sesiones activas. Crear una nueva con cwc. Mostrar el worktree creado.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 9 — ARCHIVOS DE CONTEXTO
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 3 — archivos de contexto</span>
+      <h1>El secreto:<br><span class="gradient">Claude siempre sabe<br>dónde está parado</span></h1>
+      <aside class="notes">Intro a los archivos de contexto. El "manual del empleado".</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 10 — LAS CAPAS
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 3 — las capas</span>
+      <table>
+        <thead>
+          <tr><th>Archivo</th><th>Para qué sirve</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>CLAUDE.md</code></td><td>Manual del proyecto: stack, convenciones, qué no tocar</td></tr>
+          <tr><td><code>TASK_NOTES.md</code></td><td>Contexto de la tarea — persiste entre sesiones</td></tr>
+          <tr><td><code>SHARED_CONTEXT.md</code></td><td>Notas cruzadas entre todos los worktrees</td></tr>
+          <tr><td><code>init_prompt.txt</code></td><td>Setup automático al abrir la sesión</td></tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:0.5em;">
+        💡 Como el onboarding de un contratista: llega y ya tiene el manual en mano.
+      </div>
+      <aside class="notes">SHARED_CONTEXT es el más poderoso — varias sesiones compartiendo descubrimientos.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 11 — TIPS CONTEXTO
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 3 — tips</span>
+      <h1>Contexto inteligente</h1>
+      <ul>
+        <li>Si una sesión descubre algo → <code>SHARED_CONTEXT.md</code> y las demás lo saben</li>
+        <li><strong>Workflow templates</strong> — Claude sigue checklists (feature, bugfix, refactor)</li>
+        <li><strong>Auto-compact hook</strong> — Claude se avisa solo antes de que el contexto se llene</li>
+        <li><strong>Hooks en general</strong> — 18 eventos, sonidos, logs, contexto inyectado automáticamente</li>
+      </ul>
+      <aside class="notes">Auto-compact es clave para sesiones largas. Evita que Claude "olvide" cosas al final.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 12 — TIPS & SETUP INTRO
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <span class="section-num">sección 4 — tips & setup</span>
+      <h1>Cómo tengo<br><span class="gradient">configurado<br>todo esto</span></h1>
+      <aside class="notes">La sección más densa. Ir rápido, no entrar en detalles técnicos profundos.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 13 — MCPs vs PLUGINS
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">tips — MCPs y Plugins</span>
+      <div class="cols">
+        <div style="background:var(--surface); border-radius:12px; padding:0.8em; border:1px solid rgba(251,191,36,0.3);">
+          <h3 style="color:#fbbf24;">MCPs ⚠</h3>
+          <ul>
+            <li>Configurados desde claude.ai</li>
+            <li>Linear, Notion, Slack, Playwright…</li>
+            <li class="warn">Consumen tokens al inicio aunque no los uses</li>
+            <li>Activá solo los necesarios por tarea</li>
+          </ul>
+        </div>
+        <div style="background:var(--surface); border-radius:12px; padding:0.8em; border:1px solid rgba(6,182,212,0.3);">
+          <h3>Plugins / Skills ✓</h3>
+          <ul>
+            <li>Se cargan <strong>on-demand</strong></li>
+            <li>Solo al invocarlos</li>
+            <li>Sin costo pasivo de tokens</li>
+            <li>Seguros para tener siempre activos</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">Esta distinción es importante. MCPs = pasivos. Plugins = perezosos (lazy loading).</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 14 — AGENTES Y COMANDOS
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">tips — agentes, comandos, skills</span>
+      <div class="cols">
+        <div>
+          <h3>Agentes especializados</h3>
+          <ul>
+            <li><code>architect</code> → Opus, diseño</li>
+            <li><code>backend-reviewer</code> → Django/Python</li>
+            <li><code>frontend-reviewer</code> → React/TS</li>
+            <li><code>security-auditor</code> → auditoría</li>
+            <li><code>test-writer</code> → genera tests</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Comandos custom</h3>
+          <ul>
+            <li><code>/new-feature</code></li>
+            <li><code>/review</code></li>
+            <li><code>/test</code></li>
+            <li><code>/security-audit</code></li>
+          </ul>
+          <h3 style="margin-top:0.6em;">Skills</h3>
+          <ul>
+            <li><code>django-expert</code></li>
+            <li><code>postgres-pro</code></li>
+            <li><code>code-reviewer</code></li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">Cada agente tiene su modelo (algunos Opus, otros Sonnet) y sus herramientas. Claude delega internamente.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 15 — VISUAL UX
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">tips — visual & UX</span>
+      <h1>La terminal<br><span class="gradient">también tiene estilo</span></h1>
+      <ul style="margin-top:0.4em;">
+        <li><strong>Status line custom</strong> — branch, modelo, contexto %, costo, rate limits con countdown</li>
+        <li><strong>Sonidos por evento</strong> — voz personalizada con ElevenLabs (commit, stop, session start…)</li>
+        <li><strong>iTerm2 tab coloring</strong> — cada sesión con su color/nombre automático</li>
+        <li><code>alwaysThinkingEnabled: true</code> — extended thinking siempre activo</li>
+      </ul>
+      <aside class="notes">Mostrar la terminal en vivo si es posible. El status line es lo más visual.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 16 — QUÉ NO HACE BIEN
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 5 — honestidad ante todo</span>
+      <h1>Qué <span class="gradient">NO</span> hace bien</h1>
+      <aside class="notes">Esta sección genera más conversación que cualquier otra. Ser directo.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 17 — LIMITACIONES
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 5 — limitaciones</span>
+      <ul>
+        <li class="warn"><strong>Alucina</strong> — inventa APIs, funciones, flags que no existen</li>
+        <li class="warn"><strong>Pierde el hilo</strong> en sesiones largas — el contexto se llena</li>
+        <li class="warn"><strong>Decisiones raras</strong> con instrucciones ambiguas — garbage in, garbage out</li>
+        <li class="warn"><strong>No reemplaza tu criterio</strong> — sabe ejecutar, no siempre sabe <em>qué</em> ejecutar</li>
+        <li class="warn"><strong>Depende de conexión</strong> — sin internet, sin Claude</li>
+      </ul>
+      <div class="callout" style="border-color:rgba(251,191,36,0.4); background:rgba(251,191,36,0.05); color:#fde68a;">
+        💡 Por eso importa el setup: CLAUDE.md claro, contexto bien definido, y saber cuándo revisar lo que hace.
+      </div>
+      <aside class="notes">No defender la herramienta acá. Ser honesto genera confianza.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 18 — EASTER EGG INTRO
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <span class="section-num">sección 6 — easter egg</span>
+      <h1>¿Y cómo<br><span class="gradient">manejo<br>todo esto?</span></h1>
+      <aside class="notes">Pausa. Mirar al público. Esperar.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 19 — CW + FORGE
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">sección 6 — CW + Forge</span>
+      <div class="cols">
+        <div>
+          <h3>CW — Claude Workspace Manager</h3>
+          <ul>
+            <li>CLI en Bash que orquesta todo</li>
+            <li>Sesiones, worktrees, cuentas</li>
+            <li>Archivos de contexto automáticos</li>
+          </ul>
+          <div class="tags" style="margin-top:0.5em;">
+            <span class="tip">cw work proyecto</span>
+            <span class="tip">cw review PR</span>
+          </div>
+        </div>
+        <div>
+          <h3>Forge — el dashboard</h3>
+          <ul>
+            <li>Dashboard visual encima de CW</li>
+            <li>Sesiones activas en tiempo real</li>
+            <li>Terminales interactivos</li>
+            <li>Git stats, MCPs, estado</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:0.4em; font-size:0.55em;">
+        💡 Bonus: <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1</code> — agentes que se coordinan entre sí
+      </div>
+      <aside class="notes">No entrar en detalles. La demo habla sola.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 20 — DEMO 2
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <div class="demo-slide">
+        <div class="demo-icon">🚀</div>
+        <p class="demo-title gradient">Demo 2</p>
+        <p class="demo-label">Forge en vivo — dashboard visual</p>
+        <div style="margin-top:0.8em; display:flex; gap:0.5em; justify-content:center; flex-wrap:wrap;">
+          <span class="tip">sesiones activas</span>
+          <span class="tip">terminales</span>
+          <span class="tip">git stats</span>
+        </div>
+      </div>
+      <aside class="notes">Abrir Forge. Mostrar sesiones activas. Abrir una terminal. Mostrar git stats y MCPs.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 21 — EMPEZÁ HOY
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="section-num">empezá hoy</span>
+      <h1>Tres niveles<br>de entrada</h1>
+      <div class="levels">
+        <div class="level-card">
+          <div class="num">Nivel 0</div>
+          <div class="title">ChatGPT o Claude Desktop</div>
+          <div class="desc">Ya es suficiente para empezar. No necesitás nada más.</div>
+        </div>
+        <div class="level-card" style="border-color:rgba(124,58,237,0.4);">
+          <div class="num">Nivel 1</div>
+          <div class="title">Claude Code + CLAUDE.md</div>
+          <div class="desc">Mucho impacto, setup mínimo. Un archivo de texto cambia todo.</div>
+        </div>
+        <div class="level-card" style="border-color:rgba(37,99,235,0.4);">
+          <div class="num">Nivel 2</div>
+          <div class="title">Sesiones paralelas + contexto</div>
+          <div class="desc">Cuando estés listo. CW y Forge opcionales.</div>
+        </div>
+      </div>
+      <aside class="notes">El mensaje clave: no necesitás todo esto. Empezá desde donde estás.</aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SLIDE 22 — CIERRE
+    ══════════════════════════════════════════════ -->
+    <section class="center-slide" style="text-align:center;">
+      <h1 style="font-size:1.5em;">
+        <span class="gradient">"El mejor setup de AI<br>es el que realmente usás."</span>
+      </h1>
+      <p style="font-size:0.5em; color:var(--muted); margin-top:1em; font-family:'JetBrains Mono',monospace;">
+        Preguntas → ¿les pica la curiosidad? Hablamos.
+      </p>
+      <aside class="notes">Silencio. Dejar que respire. Luego abrir para preguntas.</aside>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'fade',
+    center: false,
+    margin: 0.06,
+    width: 1280,
+    height: 720,
+    plugins: []
+  });
+</script>
+</body>
+</html>
