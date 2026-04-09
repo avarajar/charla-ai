@@ -366,16 +366,26 @@
     <!-- ══════════════════════════════════════════
          01 — TÍTULO
     ══════════════════════════════════════════════ -->
-    <section class="tc" style="text-align:center;">
-      <span class="eyebrow" style="font-size:0.42em;">una charla sobre</span>
-      <h1 style="font-size:2em; line-height:1.0;">
-        mi uso<br>
-        <span class="gr">cotid<em style="font-style:normal; text-decoration: underline; text-decoration-color: rgba(192,132,252,0.5); text-underline-offset:6px;">IA</em>no</span>
-      </h1>
-      <p style="font-size:0.58em; color:var(--mu); margin-top:0.9em; max-width:500px; margin-inline:auto; line-height:1.7;">
-        No uso IA pa hacer magia.<br>La uso pa no perder el hilo.
-      </p>
-      <aside class="notes">Arrancar con pausa. Dejar que el título se lea.</aside>
+    <section style="padding:0 !important;">
+      <div style="display:grid; grid-template-columns:1fr 420px; height:720px; overflow:hidden;">
+        <!-- Left: text -->
+        <div style="display:flex; flex-direction:column; justify-content:center; padding:0 2.5em 0 1.5em;">
+          <span class="eyebrow" style="font-size:0.38em; margin-bottom:0.8em;">una charla sobre</span>
+          <h1 style="font-size:1.75em; line-height:1.0; margin:0 0 0.5em;">
+            mi uso<br>
+            <span class="gr">cotid<em style="font-style:normal; border-bottom:3px solid rgba(192,132,252,0.5);">IA</em>no</span>
+          </h1>
+          <p style="font-size:0.55em; color:var(--mu); line-height:1.8; margin:0;">
+            No uso IA pa hacer magia.<br>La uso pa no perder el hilo.
+          </p>
+        </div>
+        <!-- Right: photo -->
+        <div style="position:relative; overflow:hidden;">
+          <img src="hero.png" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;" />
+          <div style="position:absolute; inset:0; background:linear-gradient(to right, var(--bg) 0%, transparent 30%);"></div>
+        </div>
+      </div>
+      <aside class="notes">Arrancar con pausa. Dejar que el título se lea. La foto habla sola.</aside>
     </section>
 
     <!-- ══════════════════════════════════════════
