@@ -572,7 +572,72 @@
     </section>
 
     <!-- ══════════════════════════════════════════
-         12 — TIPS INTRO
+         12 — JERARQUÍA DE ARCHIVOS
+    ══════════════════════════════════════════════ -->
+    <section>
+      <span class="eyebrow">sección 03 — estructura real</span>
+      <h1 style="font-size:1.1em; margin-bottom:0.5em;">El setup completo,<br><span class="gr">archivo por archivo</span></h1>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2em; font-family:'JetBrains Mono',monospace; font-size:0.48em;">
+
+        <!-- Global -->
+        <div class="card accent-p" style="padding:0.8em 1em;">
+          <div style="color:var(--p1); font-weight:600; margin-bottom:0.6em; font-size:1.05em;">~/.claude/  <span style="color:var(--mu); font-size:0.8em; font-weight:400;">global</span></div>
+          <div style="line-height:2; color:#c8c8e8;">
+            <div>├── <span style="color:#f472b6;">CLAUDE.md</span> <span style="color:var(--mu);">← instrucciones globales</span></div>
+            <div>├── settings.json</div>
+            <div>├── <span style="color:var(--b1);">agents/</span></div>
+            <div>│   ├── architect.md <span style="color:var(--mu);">[Opus]</span></div>
+            <div>│   ├── backend-reviewer.md</div>
+            <div>│   ├── frontend-reviewer.md</div>
+            <div>│   ├── security-auditor.md</div>
+            <div>│   └── test-writer.md</div>
+            <div>├── <span style="color:var(--g1);">commands/</span></div>
+            <div>│   ├── /new-feature</div>
+            <div>│   ├── /review</div>
+            <div>│   ├── /test</div>
+            <div>│   └── /security-audit</div>
+            <div>└── <span style="color:var(--p1);">skills/</span></div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;├── django-expert/</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;├── postgres-pro/</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;├── code-reviewer/</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;└── test-master/</div>
+          </div>
+        </div>
+
+        <!-- Project -->
+        <div style="display:flex; flex-direction:column; gap:0.9em;">
+          <div class="card accent-b" style="padding:0.8em 1em;">
+            <div style="color:var(--b1); font-weight:600; margin-bottom:0.6em; font-size:1.05em;">mi-proyecto/  <span style="color:var(--mu); font-size:0.8em; font-weight:400;">por proyecto</span></div>
+            <div style="line-height:2; color:#c8c8e8;">
+              <div>├── <span style="color:#f472b6;">CLAUDE.md</span> <span style="color:var(--mu);">← reglas del proyecto</span></div>
+              <div>├── <span style="color:var(--b1);">.claude/</span></div>
+              <div>│   ├── <span style="color:var(--b1);">agents/</span></div>
+              <div>│   │   ├── code-reviewer.md</div>
+              <div>│   │   ├── planner.md</div>
+              <div>│   │   └── researcher.md</div>
+              <div>│   └── <span style="color:var(--g1);">commands/</span></div>
+              <div>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── /plan-feature</div>
+              <div>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── /review-pr</div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:0.8em 1em; border-color:rgba(52,211,153,0.3);">
+            <div style="color:var(--g1); font-weight:600; margin-bottom:0.6em; font-size:1.05em;">~/.cw/sessions/proyecto/tarea/</div>
+            <div style="line-height:2; color:#c8c8e8;">
+              <div>├── session.json <span style="color:var(--mu);">← metadata</span></div>
+              <div>├── <span style="color:#f472b6;">TASK_NOTES.md</span> <span style="color:var(--mu);">← contexto tarea</span></div>
+              <div>├── <span style="color:#f472b6;">SHARED_CONTEXT.md</span></div>
+              <div>└── init_prompt.txt</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <aside class="notes">La jerarquía tiene dos niveles: global (~/.claude) aplica a todas las sesiones. Por proyecto (.claude/) aplica solo a ese repo. Las sesiones de CW agregan el tercer nivel con contexto de tarea.</aside>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         ORIGINAL 12 — TIPS INTRO
     ══════════════════════════════════════════════ -->
     <section class="divider">
       <div class="num">SECCIÓN 04</div>
